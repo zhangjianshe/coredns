@@ -1,3 +1,3 @@
 #!/bin/bash
-doceker build -t harbor.cangling.cn:22002/cangling/cordns:2.0 .
+docker build -t harbor.cangling.cn:22002/cangling/coredns:2.0 .
 

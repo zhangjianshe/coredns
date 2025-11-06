@@ -15,16 +15,14 @@ RUN apk add --no-cache git
 # Clone CoreDNS source code
 RUN git clone https://github.com/coredns/coredns .
 
-# Add the 'api' plugin to the list of plugins to be built
-RUN sed -i '/^.*forward/i api:github.com/coredns/coredns/plugin/api' plugin.cfg
 
-RUN go get github.com/coredns/coredns/plugin/api
-RUN go mod tidy
-# CRITICAL FIX: Explicitly fetch the 'api' plugin module dependency 
-# before running generate/build. This resolves the "no required module provides package..." error.
 
-# Build CoreDNS binary
+# Step 7: Run go generate (creates zplugin.go)
 RUN go generate
+
+
+RUN go mod tidy 
+
 RUN go build -o /usr/local/bin/coredns
 
 # ------------------------------------
